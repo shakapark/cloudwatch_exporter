@@ -11,6 +11,10 @@ The configuration is in YAML and tries to stay in the same spirit as the officia
 tasks:
  - name: billing
    default_region: us-east-1
+   auth:
+     id: "id"
+     secret: "secret"
+     token: "token"
    metrics:
     - aws_namespace: "AWS/Billing"
       aws_dimensions: [Currency]
