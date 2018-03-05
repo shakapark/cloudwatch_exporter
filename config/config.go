@@ -52,6 +52,10 @@ func (s *Settings) GetTask(name string) (*Task, error) {
 	return nil, errors.New(fmt.Sprintf("can't find task '%s' in configuration", name))
 }
 
+func (t *Task) GetAuth() *Auth {
+	return &t.Auth
+}
+
 func Load(filename string) (*Settings, error) {
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
