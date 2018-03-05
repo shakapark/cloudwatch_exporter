@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/technofy/cloudwatch_exporter/config"
+	"github.com/shakapark/cloudwatch_exporter/config"
 	"time"
 )
 
@@ -28,6 +28,7 @@ type cwCollectorTemplate struct {
 type cwCollector struct {
 	Region            string
 	Target            string
+	Credentials       *config.Auth
 	ScrapeTime        prometheus.Gauge
 	ErroneousRequests prometheus.Counter
 	Template          *cwCollectorTemplate
@@ -94,6 +95,7 @@ func NewCwCollector(target string, taskName string, region string) (*cwCollector
 	return &cwCollector{
 		Region: region,
 		Target: target,
+		Credentials: task.GetAuth(),
 		ScrapeTime: prometheus.NewGauge(prometheus.GaugeOpts{
 			Name: "cloudwatch_exporter_scrape_duration_seconds",
 			Help: "Time this CloudWatch scrape took, in seconds.",

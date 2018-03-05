@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/service/cloudwatch"
 	"github.com/prometheus/client_golang/prometheus"
 	"time"
@@ -27,7 +28,8 @@ func getLatestDatapoint(datapoints []*cloudwatch.Datapoint) *cloudwatch.Datapoin
 // Once converted into Prometheus format, the metrics are pushed on the ch channel.
 func scrape(collector *cwCollector, ch chan<- prometheus.Metric) {
 	session := session.Must(session.NewSession(&aws.Config{
-		Region: aws.String(collector.Region),
+		Credentials: credentials.NewStaticCredentials(collector.Credentials.Id, collector.Credentials.Secret, collector.Credentials.Token),
+		Region:      aws.String(collector.Region),
 	}))
 
 	svc := cloudwatch.New(session)

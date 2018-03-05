@@ -1,6 +1,10 @@
 tasks:
  - name: billing
    default_region: us-east-1
+   auth:
+     id: 
+     secret: 
+     token: 
    metrics:
     - aws_namespace: "AWS/Billing"
       aws_dimensions: [Currency]
